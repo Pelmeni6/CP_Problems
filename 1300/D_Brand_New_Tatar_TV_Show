@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+void solve(){
+    ll n, k, mx = 0, sec = -1e18;
+    cin >> n >> k;
+    vector<ll> A(n);
+    for (auto &&i : A) cin >> i;
+    sort(A.begin(), A.end());
+    vector<pair<ll, ll>> cnt = {{A[0], 1LL}};
+    for (int i = 1; i < n; i++)
+    {
+        if (A[i] == A[i - 1]) cnt.back().second++;
+        else cnt.push_back({A[i], 1});
+    }
+    while (cnt.size())
+    {
+        ll c = cnt.size() - 1;
+        if (cnt[c].second % 2 == 0)
+        {
+            cout << "YES\n";
+            return;
+        }
+        if (c == 0)
+        {
+            cout << "NO\n";
+            return;
+        }
+        if (cnt[c].first - cnt[c - 1].first <= k)
+        {
+            cout << "YES\n";
+            return;
+        }
+        cnt.pop_back();
+    }
+    cout << "NO\n";
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        solve();
+    }
+    return 0;
+}
